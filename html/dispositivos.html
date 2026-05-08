@@ -1,0 +1,445 @@
+﻿﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <title>Dispositivos – EnerTrack</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/notifications.css">
+    <link rel="stylesheet" href="../css/dispositivos.css">
+</head>
+<body>
+<div class="app-container">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo"><img src="../assets/logo.svg" alt="EnerTrack" style="width:100%;height:100%;object-fit:contain;"></div>
+            <div class="sidebar-title"><h2>EnerTrack</h2><p id="sidebarSubtitle">Panel</p></div>
+        </div>
+        <nav class="sidebar-nav" id="sidebarNav"></nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar"></div>
+                <div class="user-details"><h4 id="userName"></h4><p id="userRole"></p></div>
+            </div>
+            <button class="btn-logout" id="logoutBtn" type="button"><i class="fas fa-sign-out-alt"></i><span>Cerrar Sesión</span></button>
+        </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <main class="main-content">
+        <nav class="navbar">
+            <div class="navbar-left">
+                <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menú"><i class="fas fa-bars"></i></button>
+                <div>
+                    <h1>Gestión de Dispositivos</h1>
+                    <p><span class="realtime-dot"></span>Monitoreo en tiempo real</p>
+                </div>
+            </div>
+            <div class="navbar-right">
+                <div class="notif-wrapper">
+                    <button class="notif-btn" id="notifBtn" type="button" aria-label="Notificaciones">
+                        <i class="fas fa-bell"></i><span class="notif-badge" id="notifBadge">3</span>
+                    </button>
+                    <div class="notif-panel" id="notifPanel"></div>
+                </div>
+                <div class="navbar-user">
+                    <div class="user-avatar-sm" id="navAvatar"></div>
+                    <span id="navUserName"></span>
+                </div>
+            </div>
+        </nav>
+
+        <div class="page-content">
+
+            <!-- Stats -->
+            <div class="cards-grid" style="grid-template-columns:repeat(4,1fr)">
+                <div class="card card-blue">
+                    <div class="card-header"><span class="card-title">Total Sensores</span><div class="card-icon"><i class="fas fa-microchip"></i></div></div>
+                    <div class="card-value" id="statTotal">10</div>
+                    <div class="card-label">Registrados en el sistema</div>
+                </div>
+                <div class="card card-green">
+                    <div class="card-header"><span class="card-title">Activos</span><div class="card-icon"><i class="fas fa-power-off"></i></div></div>
+                    <div class="card-value" id="statActive">7</div>
+                    <div class="card-label">En funcionamiento ahora</div>
+                </div>
+                <div class="card card-yellow">
+                    <div class="card-header"><span class="card-title">Consumo Total</span><div class="card-icon"><i class="fas fa-bolt"></i></div></div>
+                    <div class="card-value" id="statConsumption">1,337 W</div>
+                    <div class="card-label">Suma de activos</div>
+                </div>
+                <div class="card card-purple">
+                    <div class="card-header"><span class="card-title">Eficiencia</span><div class="card-icon"><i class="fas fa-leaf"></i></div></div>
+                    <div class="card-value">A</div>
+                    <div class="card-label">Clasificación promedio</div>
+                </div>
+            </div>
+
+            <!-- Controles -->
+            <div class="controls-bar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar dispositivo, área o tipo...">
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all" type="button"><i class="fas fa-th"></i><span>Todos</span></button>
+                    <button class="filter-btn" data-filter="active" type="button"><i class="fas fa-check-circle"></i><span>Activos</span></button>
+                    <button class="filter-btn" data-filter="inactive" type="button"><i class="fas fa-times-circle"></i><span>Inactivos</span></button>
+                </div>
+                <select class="select-period" id="areaFilter" title="Filtrar por área">
+                    <option value="all">Todas las áreas</option>
+                    <option value="Cocina">Cocina</option>
+                    <option value="Sala">Sala</option>
+                    <option value="Habitación">Habitación</option>
+                    <option value="Baño">Baño</option>
+                    <option value="Oficina">Oficina</option>
+                    <option value="Lavandería">Lavandería</option>
+                    <option value="General">General</option>
+                </select>
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="grid" type="button" title="Vista tarjetas"><i class="fas fa-th-large"></i></button>
+                    <button class="view-btn" data-view="list" type="button" title="Vista tabla"><i class="fas fa-list"></i></button>
+                </div>
+                <button class="btn btn-primary" id="openModalBtn" type="button">
+                    <i class="fas fa-plus"></i><span>Agregar Sensor</span>
+                </button>
+            </div>
+
+            <!-- Grid view -->
+            <div id="gridView">
+                <div class="devices-grid" id="devicesGrid"></div>
+            </div>
+
+            <!-- Table view -->
+            <div id="tableView" style="display:none">
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Dispositivo</th><th>Área</th><th>Tipo</th>
+                                <th>Consumo</th><th>Eficiencia</th><th>Estado</th><th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="devicesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     WIZARD: Agregar Sensor (4 pasos)
+══════════════════════════════════════════════════════════════ -->
+<div class="wizard-overlay" id="wizardOverlay">
+    <div class="wizard-container">
+
+        <!-- Header -->
+        <div class="wizard-header">
+            <div class="wizard-header-top">
+                <div>
+                    <div class="wizard-title">Agregar Nuevo Sensor</div>
+                    <div class="wizard-subtitle">Conecta un nuevo sensor de monitoreo de energía</div>
+                </div>
+                <button class="wizard-close" id="wizardClose" type="button" aria-label="Cerrar"><i class="fas fa-times"></i></button>
+            </div>
+
+            <!-- Steps -->
+            <div class="wizard-steps" id="wizardSteps">
+                <div class="wizard-step-item active" data-step="1">
+                    <div class="step-circle" id="stepCircle1"><i class="fas fa-plug"></i></div>
+                    <span class="step-label">Conectar</span>
+                </div>
+                <div class="step-line" id="stepLine1"></div>
+                <div class="wizard-step-item" data-step="2">
+                    <div class="step-circle" id="stepCircle2"><i class="fas fa-wifi"></i></div>
+                    <span class="step-label">WiFi</span>
+                </div>
+                <div class="step-line" id="stepLine2"></div>
+                <div class="wizard-step-item" data-step="3">
+                    <div class="step-circle" id="stepCircle3"><i class="fas fa-cog"></i></div>
+                    <span class="step-label">Configurar</span>
+                </div>
+                <div class="step-line" id="stepLine3"></div>
+                <div class="wizard-step-item" data-step="4">
+                    <div class="step-circle" id="stepCircle4"><i class="fas fa-check"></i></div>
+                    <span class="step-label">Listo</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Body -->
+        <div class="wizard-body">
+
+            <!-- PASO 1: Conectar sensor -->
+            <div class="wizard-panel active" id="wizardPanel1">
+                <div class="wizard-panel-title">Prepara el sensor</div>
+                <div class="wizard-panel-desc">Conecta físicamente el sensor EnerTrack a una toma de corriente y espera la señal de emparejamiento.</div>
+
+                <div class="instruction-list">
+                    <div class="instruction-item">
+                        <div class="instruction-num">1</div>
+                        <div class="instruction-text"><strong>Toma el sensor EnerTrack de la caja</strong><br>Verifica que el sensor esté en buen estado y sin daños visibles.</div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-num">2</div>
+                        <div class="instruction-text"><strong>Conecta el sensor a una toma de corriente</strong><br>Usa una toma cercana al dispositivo que deseas monitorear.</div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-num">3</div>
+                        <div class="instruction-text"><strong>Espera a que el LED azul parpadee</strong><br>El LED indica que el sensor está listo para configurarse (aprox. 10 segundos).</div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-num">4</div>
+                        <div class="instruction-text"><strong>Activa el modo emparejamiento</strong><br>Mantén presionado el botón lateral durante <strong>3 segundos</strong> hasta que el LED cambie a azul rápido.</div>
+                    </div>
+                </div>
+
+                <div class="led-indicator" id="ledIndicator">
+                    <div class="led-dot"></div>
+                    <span class="led-text">LED azul parpadeando — Sensor listo para configurarse</span>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="sensorPlugged" style="margin-right:8px;accent-color:var(--secondary-blue)">
+                        Sensor enchufado y LED azul parpadeando
+                    </label>
+                </div>
+            </div>
+
+            <!-- PASO 2: Conectar WiFi -->
+            <div class="wizard-panel" id="wizardPanel2">
+                <div class="wizard-panel-title">Conecta a WiFi</div>
+                <div class="wizard-panel-desc">Selecciona tu red WiFi y proporciona la contraseña para que el sensor pueda enviar datos.</div>
+
+                <div class="wifi-list" id="wifiList">
+                    <div class="wifi-item" data-ssid="EnerTrack_Home" onclick="selectWifi(this)">
+                        <i class="fas fa-wifi wifi-icon"></i>
+                        <span class="wifi-name">EnerTrack_Home</span>
+                        <span class="wifi-signal">Señal: Excelente</span>
+                        <i class="fas fa-lock wifi-lock"></i>
+                    </div>
+                    <div class="wifi-item" data-ssid="Hogar_WiFi_5G" onclick="selectWifi(this)">
+                        <i class="fas fa-wifi wifi-icon"></i>
+                        <span class="wifi-name">Hogar_WiFi_5G</span>
+                        <span class="wifi-signal">Señal: Buena</span>
+                        <i class="fas fa-lock wifi-lock"></i>
+                    </div>
+                    <div class="wifi-item" data-ssid="Red_Familiar" onclick="selectWifi(this)">
+                        <i class="fas fa-wifi wifi-icon" style="color:var(--warning-color)"></i>
+                        <span class="wifi-name">Red_Familiar</span>
+                        <span class="wifi-signal">Señal: Regular</span>
+                        <i class="fas fa-lock wifi-lock"></i>
+                    </div>
+                    <div class="wifi-item" data-ssid="Otra_Red" onclick="selectWifi(this)">
+                        <i class="fas fa-wifi wifi-icon" style="color:var(--text-muted)"></i>
+                        <span class="wifi-name">Otra_Red</span>
+                        <span class="wifi-signal">Señal: Débil</span>
+                        <i class="fas fa-lock wifi-lock"></i>
+                    </div>
+                </div>
+
+                <div class="form-group" id="wifiPasswordGroup" style="display:none">
+                    <label for="wifiPassword">Contraseña de <span id="selectedWifiName"></span></label>
+                    <div style="position:relative">
+                        <input type="password" id="wifiPassword" placeholder="Ingresa la contraseña WiFi" style="padding-right:44px">
+                        <button type="button" id="toggleWifiPass" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:15px">
+                            <i class="fas fa-eye" id="wifiEyeIcon"></i>
+                        </button>
+                    </div>
+                    <span class="field-err" id="errWifiPass"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-secondary" id="scanWifiBtn" style="width:100%">
+                        <i class="fas fa-sync-alt"></i><span>Buscar redes disponibles</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PASO 3: Configurar dispositivo -->
+            <div class="wizard-panel" id="wizardPanel3">
+                <div class="wizard-panel-title">Configura el dispositivo</div>
+                <div class="wizard-panel-desc">Asigna un nombre, área y categoría al sensor para identificarlo en el sistema.</div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="wDeviceName">Nombre del Dispositivo <span style="color:var(--error-color)">*</span></label>
+                        <input type="text" id="wDeviceName" placeholder="Ej: Refrigerador Samsung">
+                        <span class="field-err" id="wErrName"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="wDeviceArea">Área del Hogar <span style="color:var(--error-color)">*</span></label>
+                        <select id="wDeviceArea" title="Seleccionar área">
+                            <option value="">Seleccionar área</option>
+                            <option value="Cocina">Cocina</option>
+                            <option value="Sala">Sala</option>
+                            <option value="Habitación">Habitación</option>
+                            <option value="Baño">Baño</option>
+                            <option value="Oficina">Oficina</option>
+                            <option value="Lavandería">Lavandería</option>
+                            <option value="General">General</option>
+                        </select>
+                        <span class="field-err" id="wErrArea"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="wDeviceType">Tipo de Dispositivo <span style="color:var(--error-color)">*</span></label>
+                        <select id="wDeviceType" title="Seleccionar tipo">
+                            <option value="">Seleccionar tipo</option>
+                            <option value="Electrodoméstico">Electrodoméstico</option>
+                            <option value="Climatización">Climatización</option>
+                            <option value="Entretenimiento">Entretenimiento</option>
+                            <option value="Electrónica">Electrónica</option>
+                            <option value="Iluminación">Iluminación</option>
+                        </select>
+                        <span class="field-err" id="wErrType"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="wDeviceConsumption">Consumo Estimado (W) <span style="color:var(--error-color)">*</span></label>
+                        <input type="number" id="wDeviceConsumption" placeholder="Ej: 150" min="1" max="10000">
+                        <span class="field-err" id="wErrConsumption"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="wDeviceEfficiency">Eficiencia Energética</label>
+                        <select id="wDeviceEfficiency" title="Seleccionar eficiencia">
+                            <option value="A++">A++ (Muy eficiente)</option>
+                            <option value="A+" selected>A+ (Eficiente)</option>
+                            <option value="A">A (Buena)</option>
+                            <option value="B+">B+ (Aceptable)</option>
+                            <option value="B">B (Regular)</option>
+                            <option value="C">C (Baja)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="wDeviceStatus">Estado Inicial</label>
+                        <select id="wDeviceStatus" title="Seleccionar estado">
+                            <option value="active">Activo</option>
+                            <option value="inactive">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASO 4: Éxito -->
+            <div class="wizard-panel" id="wizardPanel4">
+                <div class="wizard-success">
+                    <div class="success-icon"><i class="fas fa-check"></i></div>
+                    <div class="success-title">¡Sensor conectado exitosamente!</div>
+                    <div class="success-desc">El sensor ha sido registrado y ya está monitoreando el consumo energético en tiempo real.</div>
+                    <div class="success-details" id="successDetails"></div>
+                    <div class="led-indicator">
+                        <div class="led-dot"></div>
+                        <span class="led-text">Sensor activo — Enviando datos cada 2 segundos</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="wizard-footer">
+            <div class="wizard-footer-left" id="wizardStepLabel">Paso 1 de 4</div>
+            <div class="wizard-footer-right">
+                <button class="btn btn-secondary" id="wizardBack" type="button" style="display:none">
+                    <i class="fas fa-arrow-left"></i><span>Anterior</span>
+                </button>
+                <button class="btn btn-primary" id="wizardNext" type="button">
+                    <span>Siguiente</span><i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal Editar Dispositivo -->
+<div class="modal edit-device-modal" id="editDeviceModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-edit" style="color:var(--secondary-blue);margin-right:8px"></i>Editar Dispositivo</h3>
+            <button class="modal-close" id="closeEditModal" type="button"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="editDeviceId">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="editName">Nombre</label>
+                    <input type="text" id="editName" placeholder="Nombre del dispositivo">
+                </div>
+                <div class="form-group">
+                    <label for="editArea">Área</label>
+                    <select id="editArea" title="Área">
+                        <option value="Cocina">Cocina</option>
+                        <option value="Sala">Sala</option>
+                        <option value="Habitación">Habitación</option>
+                        <option value="Baño">Baño</option>
+                        <option value="Oficina">Oficina</option>
+                        <option value="Lavandería">Lavandería</option>
+                        <option value="General">General</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="editType">Tipo</label>
+                    <select id="editType" title="Tipo">
+                        <option value="Electrodoméstico">Electrodoméstico</option>
+                        <option value="Climatización">Climatización</option>
+                        <option value="Entretenimiento">Entretenimiento</option>
+                        <option value="Electrónica">Electrónica</option>
+                        <option value="Iluminación">Iluminación</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editConsumption">Consumo (W)</label>
+                    <input type="number" id="editConsumption" min="1" max="10000">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="editEfficiency">Eficiencia</label>
+                    <select id="editEfficiency" title="Eficiencia">
+                        <option value="A++">A++</option>
+                        <option value="A+">A+</option>
+                        <option value="A">A</option>
+                        <option value="B+">B+</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editStatus">Estado</label>
+                    <select id="editStatus" title="Estado">
+                        <option value="active">Activo</option>
+                        <option value="inactive">Inactivo</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelEditModal" type="button">Cancelar</button>
+                <button class="btn btn-primary" id="saveEditDevice" type="button">
+                    <i class="fas fa-save"></i><span>Guardar Cambios</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button class="scroll-top" id="scrollTop" type="button" aria-label="Volver arriba" title="Volver arriba"><i class="fas fa-chevron-up"></i></button>
+
+<script src="../js/auth.js"></script>
+<script src="../js/data.js"></script>
+<script src="../js/notifications.js"></script>
+<script src="../js/dispositivos.js"></script>
+</body>
+</html>
