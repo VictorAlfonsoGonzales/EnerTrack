@@ -1,0 +1,99 @@
+/* Dispositivos – estilos específicos */
+
+.controls-bar {
+    display:flex; align-items:center; gap:12px;
+    margin-bottom:20px; flex-wrap:wrap;
+}
+
+.search-box {
+    flex:1; min-width:220px; position:relative;
+    display:flex; align-items:center;
+}
+.search-box i { position:absolute; left:13px; color:var(--text-muted); font-size:14px; pointer-events:none; }
+.search-box input {
+    width:100%; padding:10px 14px 10px 40px;
+    background:var(--card-bg); border:1.5px solid var(--border-color);
+    border-radius:9px; color:var(--text-primary);
+    font-size:14px; font-family:inherit; transition:var(--transition);
+}
+.search-box input:focus { outline:none; border-color:var(--secondary-blue); }
+.search-box input::placeholder { color:var(--text-muted); }
+
+.filter-buttons { display:flex; gap:8px; }
+.filter-btn {
+    padding:9px 14px; background:var(--card-bg);
+    border:1.5px solid var(--border-color); border-radius:8px;
+    color:var(--text-secondary); font-size:13px; font-weight:500;
+    cursor:pointer; display:flex; align-items:center; gap:6px;
+    transition:var(--transition);
+}
+.filter-btn:hover { background:var(--hover-bg); color:var(--text-primary); }
+.filter-btn.active { background:rgba(59,130,246,0.1); border-color:var(--secondary-blue); color:var(--secondary-blue); }
+
+.view-toggle { display:flex; gap:6px; }
+.view-btn {
+    width:38px; height:38px; background:var(--card-bg);
+    border:1.5px solid var(--border-color); border-radius:8px;
+    color:var(--text-secondary); cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:var(--transition);
+}
+.view-btn:hover { background:var(--hover-bg); color:var(--text-primary); }
+.view-btn.active { background:rgba(59,130,246,0.1); border-color:var(--secondary-blue); color:var(--secondary-blue); }
+
+/* Grid de dispositivos */
+.devices-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+    gap:18px;
+}
+
+.device-card-full {
+    background:var(--card-bg); border:1.5px solid var(--border-color);
+    border-radius:12px; padding:18px;
+    transition:var(--transition); cursor:pointer;
+}
+.device-card-full:hover { transform:translateY(-4px); box-shadow:0 12px 30px rgba(0,0,0,0.3); border-color:var(--secondary-blue); }
+
+.device-card-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.device-card-icon {
+    width:48px; height:48px; background:rgba(59,130,246,0.1);
+    border-radius:12px; display:flex; align-items:center; justify-content:center;
+    font-size:22px; color:var(--secondary-blue);
+}
+.device-card-name { font-size:16px; font-weight:700; margin-bottom:4px; }
+.device-card-area { font-size:12px; color:var(--text-secondary); display:flex; align-items:center; gap:5px; margin-bottom:14px; }
+
+.device-card-stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+.device-stat { display:flex; flex-direction:column; gap:3px; }
+.device-stat-label { font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.4px; }
+.device-stat-value { font-size:18px; font-weight:700; }
+
+.device-card-footer {
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:12px; border-top:1px solid var(--border-color);
+}
+.efficiency-badge {
+    padding:4px 10px; background:rgba(16,185,129,0.1);
+    color:var(--success-color); border-radius:6px;
+    font-size:11px; font-weight:700;
+}
+
+.empty-msg {
+    grid-column:1/-1; text-align:center;
+    color:var(--text-muted); padding:40px; font-size:14px;
+}
+
+/* Form modal */
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.req { color:var(--error-color); }
+.field-err { display:block; font-size:11px; color:var(--error-color); margin-top:4px; min-height:14px; }
+.input-error { border-color:var(--error-color) !important; }
+
+@media (max-width:768px) {
+    .controls-bar { flex-direction:column; align-items:stretch; }
+    .filter-buttons { justify-content:space-between; }
+    .filter-btn span { display:none; }
+    .devices-grid { grid-template-columns:1fr; }
+    .form-row { grid-template-columns:1fr; }
+}

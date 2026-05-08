@@ -1,0 +1,208 @@
+/* Estilos del módulo de Configuración */
+
+.config-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+}
+
+.config-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.config-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 25px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.config-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.config-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.config-header p {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.config-body {
+    padding: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    background: var(--dark-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 14px;
+    transition: var(--transition);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--secondary-blue);
+}
+
+.form-group input[readonly] {
+    background: var(--hover-bg);
+    cursor: not-allowed;
+}
+
+/* Toggle Switch */
+.setting-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.setting-item:last-child {
+    border-bottom: none;
+}
+
+.setting-info {
+    flex: 1;
+}
+
+.setting-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.setting-description {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--dark-bg);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    border-radius: 26px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: var(--text-secondary);
+    transition: var(--transition);
+    border-radius: 50%;
+}
+
+.toggle input:checked + .toggle-slider {
+    background: linear-gradient(135deg, var(--secondary-blue), var(--electric-blue));
+    border-color: var(--secondary-blue);
+}
+
+.toggle input:checked + .toggle-slider:before {
+    transform: translateX(24px);
+    background: white;
+}
+
+/* Info Items */
+.info-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.info-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .config-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .config-header {
+        padding: 20px;
+    }
+    
+    .config-body {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .setting-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}

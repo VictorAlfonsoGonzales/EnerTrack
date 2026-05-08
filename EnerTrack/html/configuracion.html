@@ -1,0 +1,306 @@
+﻿﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <title>Configuración – EnerTrack</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/notifications.css">
+    <link rel="stylesheet" href="../css/configuracion.css">
+</head>
+<body>
+<div class="app-container">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/logo.svg" alt="EnerTrack" style="width:100%;height:100%;object-fit:contain;">
+            </div>
+            <div class="sidebar-title">
+                <h2>EnerTrack</h2>
+                <p id="sidebarSubtitle">Panel</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav"></nav>
+
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar"></div>
+                <div class="user-details">
+                    <h4 id="userName"></h4>
+                    <p id="userRole"></p>
+                </div>
+            </div>
+            <button class="btn-logout" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i><span>Cerrar Sesión</span>
+            </button>
+        </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <main class="main-content">
+        <nav class="navbar">
+            <div class="navbar-left">
+                <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div>
+                    <h1 id="pageTitle">Configuración</h1>
+                    <p>Personaliza tu experiencia en EnerTrack</p>
+                </div>
+            </div>
+            <div class="navbar-right">
+                <div class="notif-wrapper">
+                    <button class="notif-btn" id="notifBtn" aria-label="Notificaciones">
+                        <i class="fas fa-bell"></i>
+                        <span class="notif-badge" id="notifBadge">3</span>
+                    </button>
+                    <div class="notif-panel" id="notifPanel"></div>
+                </div>
+                <div class="navbar-user">
+                    <div class="user-avatar-sm" id="navAvatar"></div>
+                    <span id="navUserName"></span>
+                </div>
+            </div>
+        </nav>
+
+        <div class="page-content">
+            <div class="config-grid">
+
+                <div class="config-card">
+                    <div class="config-header">
+                        <div class="config-icon" style="background:rgba(59,130,246,0.1);color:#3b82f6">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h3>Perfil de Usuario</h3>
+                            <p>Información personal y preferencias</p>
+                        </div>
+                    </div>
+                    <div class="config-body">
+                        <div class="form-group">
+                            <label for="profileName">Nombre de Usuario</label>
+                            <input type="text" id="profileName" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="profileEmail">Correo Electrónico</label>
+                            <input type="email" id="profileEmail" placeholder="usuario@ejemplo.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="profilePhone">Teléfono</label>
+                            <input type="tel" id="profilePhone" placeholder="+57 300 123 4567">
+                        </div>
+                        <button class="btn btn-primary btn-save-profile">
+                            <i class="fas fa-save"></i><span>Guardar Cambios</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="config-card">
+                    <div class="config-header">
+                        <div class="config-icon" style="background:rgba(239,68,68,0.1);color:#ef4444">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div>
+                            <h3>Configuración de Alertas</h3>
+                            <p>Gestiona tus notificaciones</p>
+                        </div>
+                    </div>
+                    <div class="config-body">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">Alertas de Consumo Elevado</div>
+                                <div class="setting-description">Notificar cuando el consumo supere el límite</div>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">Alertas de Dispositivos</div>
+                                <div class="setting-description">Notificar cuando un dispositivo cambie de estado</div>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">Recomendaciones Diarias</div>
+                                <div class="setting-description">Recibir consejos de ahorro energético</div>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="form-group" style="margin-top:16px">
+                            <label for="monthlyLimit">Límite de Consumo Mensual (kWh)</label>
+                            <input type="number" id="monthlyLimit" value="350" min="0" max="9999">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="config-card">
+                    <div class="config-header">
+                        <div class="config-icon" style="background:rgba(139,92,246,0.1);color:#8b5cf6">
+                            <i class="fas fa-sliders-h"></i>
+                        </div>
+                        <div>
+                            <h3>Preferencias del Sistema</h3>
+                            <p>Personaliza la interfaz</p>
+                        </div>
+                    </div>
+                    <div class="config-body">
+                        <div class="form-group">
+                            <label for="langSelect">Idioma</label>
+                            <select id="langSelect" title="Seleccionar idioma">
+                                <option value="es" selected>Español</option>
+                                <option value="en">English</option>
+                                <option value="pt">Português</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tzSelect">Zona Horaria</label>
+                            <select id="tzSelect" title="Seleccionar zona horaria">
+                                <option value="America/Bogota" selected>Bogotá (GMT-5)</option>
+                                <option value="America/Mexico_City">Ciudad de México (GMT-6)</option>
+                                <option value="America/Buenos_Aires">Buenos Aires (GMT-3)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dateFormat">Formato de Fecha</label>
+                            <select id="dateFormat" title="Seleccionar formato de fecha">
+                                <option value="DD/MM/YYYY" selected>DD/MM/YYYY</option>
+                                <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">Modo Oscuro</div>
+                                <div class="setting-description">Interfaz con colores oscuros (activo)</div>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="config-card">
+                    <div class="config-header">
+                        <div class="config-icon" style="background:rgba(16,185,129,0.1);color:#10b981">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div>
+                            <h3>Seguridad</h3>
+                            <p>Protege tu cuenta</p>
+                        </div>
+                    </div>
+                    <div class="config-body">
+                        <div class="form-group">
+                            <label for="currentPass">Contraseña Actual</label>
+                            <input type="password" id="currentPass" placeholder="Ingresa tu contraseña actual">
+                        </div>
+                        <div class="form-group">
+                            <label for="newPass">Nueva Contraseña</label>
+                            <input type="password" id="newPass" placeholder="Mínimo 6 caracteres">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPass">Confirmar Contraseña</label>
+                            <input type="password" id="confirmPass" placeholder="Repite la nueva contraseña">
+                        </div>
+                        <button class="btn btn-primary" id="btnChangePass">
+                            <i class="fas fa-key"></i><span>Cambiar Contraseña</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="config-card">
+                    <div class="config-header">
+                        <div class="config-icon" style="background:rgba(245,158,11,0.1);color:#f59e0b">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div>
+                            <h3>Información del Sistema</h3>
+                            <p>Detalles de la aplicación</p>
+                        </div>
+                    </div>
+                    <div class="config-body">
+                        <div class="info-item">
+                            <span class="info-label">Versión</span>
+                            <span class="info-value">1.0.0</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Última Actualización</span>
+                            <span class="info-value">Mayo 2026</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Dispositivos Conectados</span>
+                            <span class="info-value">10</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Disponibilidad</span>
+                            <span class="info-value">24/7</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Proyecto</span>
+                            <span class="info-value">UNAD – Ingeniería II</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="config-card">
+                    <div class="config-header">
+                        <div class="config-icon" style="background:rgba(239,68,68,0.1);color:#ef4444">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div>
+                            <h3>Acciones del Sistema</h3>
+                            <p>Gestión avanzada</p>
+                        </div>
+                    </div>
+                    <div class="config-body">
+                        <button class="btn btn-secondary btn-system-action" data-action="export"
+                            style="width:100%;margin-bottom:10px;justify-content:flex-start">
+                            <i class="fas fa-download"></i><span>Exportar Datos</span>
+                        </button>
+                        <button class="btn btn-secondary btn-system-action" data-action="sync"
+                            style="width:100%;margin-bottom:10px;justify-content:flex-start">
+                            <i class="fas fa-sync"></i><span>Sincronizar Dispositivos</span>
+                        </button>
+                        <button class="btn btn-secondary btn-system-action" data-action="cache"
+                            style="width:100%;margin-bottom:10px;justify-content:flex-start">
+                            <i class="fas fa-trash-restore"></i><span>Limpiar Caché</span>
+                        </button>
+                        <button class="btn btn-secondary btn-system-action" data-action="reset"
+                            style="width:100%;background:rgba(239,68,68,0.08);color:#ef4444;border-color:rgba(239,68,68,0.25);justify-content:flex-start">
+                            <i class="fas fa-undo"></i><span>Restablecer Configuración</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</div>
+
+<button class="scroll-top" id="scrollTop" aria-label="Volver arriba">
+    <i class="fas fa-chevron-up"></i>
+</button>
+
+<script src="../js/auth.js"></script>
+<script src="../js/data.js"></script>
+<script src="../js/notifications.js"></script>
+<script src="../js/configuracion.js"></script>
+</body>
+</html>

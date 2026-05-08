@@ -1,0 +1,65 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e3a8a"/>
+    </linearGradient>
+    <linearGradient id="houseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa"/>
+      <stop offset="100%" style="stop-color:#0ea5e9"/>
+    </linearGradient>
+    <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.2"/>
+      <stop offset="50%" style="stop-color:#0ea5e9;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:0.2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Fondo cuadrado redondeado -->
+  <rect width="200" height="200" rx="36" fill="url(#bgGrad)"/>
+
+  <!-- Ondas de señal detrás de la casa -->
+  <path d="M100 148 Q68 130 68 100 Q68 70 100 52 Q132 70 132 100 Q132 130 100 148Z"
+        fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.3"/>
+  <path d="M100 162 Q52 138 52 100 Q52 62 100 38 Q148 62 148 100 Q148 138 100 162Z"
+        fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.2"/>
+
+  <!-- Cuerpo de la casa -->
+  <rect x="68" y="108" width="64" height="46" rx="4" fill="url(#houseGrad)" opacity="0.95"/>
+
+  <!-- Techo -->
+  <polygon points="100,62 62,108 138,108" fill="#60a5fa"/>
+  <!-- Techo borde superior más claro -->
+  <polygon points="100,62 62,108 138,108" fill="none" stroke="#bfdbfe" stroke-width="2" stroke-linejoin="round"/>
+
+  <!-- Chimenea pequeña -->
+  <rect x="116" y="74" width="10" height="18" rx="2" fill="#93c5fd"/>
+
+  <!-- Puerta -->
+  <rect x="88" y="126" width="24" height="28" rx="3" fill="#1e3a8a"/>
+  <!-- Pomo de puerta -->
+  <circle cx="108" cy="141" r="2.5" fill="#60a5fa"/>
+
+  <!-- Ventana izquierda -->
+  <rect x="72" y="116" width="14" height="14" rx="2" fill="#1e3a8a"/>
+  <line x1="79" y1="116" x2="79" y2="130" stroke="#60a5fa" stroke-width="1"/>
+  <line x1="72" y1="123" x2="86" y2="123" stroke="#60a5fa" stroke-width="1"/>
+
+  <!-- Ventana derecha -->
+  <rect x="114" y="116" width="14" height="14" rx="2" fill="#1e3a8a"/>
+  <line x1="121" y1="116" x2="121" y2="130" stroke="#60a5fa" stroke-width="1"/>
+  <line x1="114" y1="123" x2="128" y2="123" stroke="#60a5fa" stroke-width="1"/>
+
+  <!-- Ondas WiFi / energía encima del techo -->
+  <path d="M100 56 Q88 48 88 38" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+  <path d="M100 56 Q112 48 112 38" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+  <path d="M100 56 Q82 44 82 28" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <path d="M100 56 Q118 44 118 28" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- Punto central de señal -->
+  <circle cx="100" cy="56" r="4" fill="#0ea5e9"/>
+  <circle cx="100" cy="56" r="7" fill="none" stroke="#0ea5e9" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Pequeño rayo en la puerta -->
+  <path d="M97 133 L101 127 L101 131 L105 131 L101 137 L101 133 Z" fill="#fbbf24"/>
+</svg>

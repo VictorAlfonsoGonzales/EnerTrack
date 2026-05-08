@@ -1,0 +1,153 @@
+/* Dashboard Usuario – estilos específicos */
+
+/* Banner de bienvenida */
+.welcome-banner {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 24px;
+    background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(14,165,233,0.08));
+    border:1px solid rgba(59,130,246,0.2);
+    border-radius:12px; margin-bottom:20px;
+}
+.welcome-text h2 { font-size:20px; font-weight:700; margin-bottom:4px; }
+.welcome-text p  { font-size:13px; color:var(--text-secondary); }
+.welcome-icon { font-size:48px; color:rgba(59,130,246,0.3); }
+
+/* Dispositivos mini */
+.devices-row {
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+    gap:14px;
+}
+.device-mini-card {
+    padding:16px; background:var(--dark-bg);
+    border:1px solid var(--border-color); border-radius:10px;
+    display:flex; flex-direction:column; align-items:center;
+    gap:6px; text-align:center;
+    transition:var(--transition); cursor:pointer;
+}
+.device-mini-card:hover { border-color:var(--secondary-blue); transform:translateY(-3px); }
+.device-mini-icon {
+    width:44px; height:44px;
+    background:rgba(59,130,246,0.1); border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:22px; color:var(--secondary-blue);
+}
+.device-mini-name { font-size:13px; font-weight:600; }
+.device-mini-area { font-size:11px; color:var(--text-muted); }
+.device-mini-consumption { font-size:18px; font-weight:800; color:var(--text-primary); }
+
+/* Recomendaciones */
+.recs-list { display:flex; flex-direction:column; gap:12px; }
+.rec-item {
+    display:flex; align-items:flex-start; gap:14px;
+    padding:14px; background:var(--dark-bg);
+    border-radius:10px; border-left:3px solid var(--secondary-blue);
+    transition:var(--transition);
+}
+.rec-item:hover { background:var(--hover-bg); }
+.rec-icon {
+    width:40px; height:40px; border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:18px; flex-shrink:0;
+}
+.rec-content { flex:1; }
+.rec-title { font-size:14px; font-weight:600; margin-bottom:4px; }
+.rec-desc  { font-size:12px; color:var(--text-secondary); margin-bottom:8px; line-height:1.5; }
+.rec-savings {
+    display:inline-flex; align-items:center; gap:5px;
+    padding:3px 10px;
+    background:rgba(16,185,129,0.1); color:var(--success-color);
+    border-radius:6px; font-size:12px; font-weight:600;
+}
+.rec-impact {
+    padding:4px 10px; border-radius:6px;
+    font-size:11px; font-weight:700; flex-shrink:0; align-self:flex-start;
+}
+
+/* Progreso mensual */
+.progress-section { display:flex; flex-direction:column; gap:16px; }
+.progress-stats {
+    display:grid; grid-template-columns:repeat(3,1fr); gap:12px;
+}
+.progress-stat {
+    display:flex; flex-direction:column; align-items:center;
+    padding:14px; background:var(--dark-bg); border-radius:10px;
+}
+.progress-label { font-size:11px; color:var(--text-secondary); margin-bottom:4px; }
+.progress-value { font-size:20px; font-weight:800; }
+
+.progress-bar-large {
+    width:100%; height:22px;
+    background:var(--dark-bg); border-radius:11px; overflow:hidden;
+}
+.progress-bar-fill {
+    height:100%;
+    background:linear-gradient(90deg,var(--secondary-blue),var(--electric-blue));
+    border-radius:11px;
+    display:flex; align-items:center; justify-content:flex-end;
+    padding-right:8px;
+    transition:width 0.8s ease;
+    position:relative; overflow:hidden;
+}
+.progress-bar-fill::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);
+    animation:shimmer 2s infinite;
+}
+@keyframes shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+.progress-label-inside { font-size:11px; font-weight:700; color:white; position:relative; z-index:1; }
+
+@media (max-width:768px) {
+    .welcome-banner { flex-direction:column; gap:12px; text-align:center; }
+    .welcome-icon { font-size:36px; }
+    .devices-row { grid-template-columns:repeat(2,1fr); }
+    .progress-stats { grid-template-columns:1fr; }
+}
+@media (max-width:480px) {
+    .devices-row { grid-template-columns:1fr; }
+}
+
+/* ── Device mini card — clickeable con feedback ── */
+.device-mini-card {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.device-mini-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(59,130,246,0);
+    transition: background 0.2s ease;
+    border-radius: 10px;
+}
+.device-mini-card:hover::after  { background: rgba(59,130,246,0.05); }
+.device-mini-card:active::after { background: rgba(59,130,246,0.12); }
+.device-mini-card:active { transform: scale(0.97); }
+
+/* ── Botón "Ver todos" en dashboard ── */
+.btn-view-all {
+    padding: 8px 16px;
+    background: var(--dark-bg);
+    border: 1.5px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    font-family: inherit;
+}
+.btn-view-all:hover {
+    background: var(--hover-bg);
+    color: var(--text-primary);
+    border-color: var(--secondary-blue);
+}
+
+/* ── Rec item clickeable ── */
+.rec-item { cursor: pointer; }
+.rec-item:active { transform: scale(0.99); }
